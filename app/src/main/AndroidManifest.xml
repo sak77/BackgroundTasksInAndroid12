@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <!-- Below privileged permission is one of the exemption criteria that
+    allows the app to launch FGS from background task-->
+    <!--<uses-permission android:name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"/>-->
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MySampleService"
+        tools:targetApi="31" >
+        <!--
+        Manifest registered receiver cannot bind to a service in
+        onReceive callback. However, both Manifest and context
+        registered receiver cannot launch FGS from background.
+        But exception is if the broadcast intent action is
+        ACTION_BOOT_COMPLETED,
+        ACTION_LOCKED_BOOT_COMPLETED,
+        or ACTION_MY_PACKAGE_REPLACED
+        -->
+<!--
+        <receiver
+            android:name=".MyReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.saket.mysampleservice.MY_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+     -->
+        <service android:name=".MyService"
+            android:exported="true"/>
+
+        <service android:name=".MyStartService"
+            android:exported="true"/>
+        <service android:name=".SampleForegroundService"
+            android:exported="true"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity android:name=".DummyActivity"/>
+    </application>
+
+</manifest>
